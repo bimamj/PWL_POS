@@ -28,15 +28,38 @@ class UserController extends Controller
         // $user = UserModel::where('username', 'manager9')->firstOrFail();
         // $user = UserModel::where('level_id',2)->count();
         // dd($user);
-        $user = UserModel::firstOrCr(
+        $user = UserModel::Create(
             [
-                'username'=> 'manager33',
-                'nama' => 'Manager Tiga Tiga',
+                'username'=> 'manager11',
+                'nama' => 'Manager11',
                 'password' => Hash::make('12345'),
                 'level_id' => 2,
             ],
         );
-        
-        return view('user', ['data' => $user]);
+
+        $user->username = 'manager11';
+        // $user->isDirty(); // true
+        // $user->isDirty('username'); // true
+        // $user->isDirty('nama'); // false
+        // $user->isDirty(['nama', 'username']); // true
+
+        // $user->isClean(); // false
+        // $user->isClean('username'); // false
+        // $user->isClean('nama'); // true
+        // $user->isClean(['nama', 'username']); // false
+
+        // $user->save();
+
+        // $user->isDirty(); // false
+        // $user->isClean(); // true
+
+        $user->save();
+
+        $user->wasChanged(); // true
+        $user->wasChanged('username'); // true
+        $user->wasChanged(['username', 'nama']); // true
+        $user->wasChanged('nama'); // false
+        dd($user->wasChanged(['nama','username'])); // false
+        // return view('user', ['data' => $user]);
     }
 }
